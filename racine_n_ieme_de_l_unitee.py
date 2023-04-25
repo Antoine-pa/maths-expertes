@@ -3,8 +3,18 @@ from math import pi, cos, sin
 from math import gcd
 
 def get_text(text: str, n: int, k: int, angle_rad: float) -> str:
+    """
+    Fonction qui donne la valeur du point à afficher
+    entrées :
+        - text : la forme du nombre à afficher
+        - n : la racine n-ieme
+        - k : la valeur du point
+        - angle_rad : la valeur de l'angle à afficher
+    sortie :
+        renvoie le texte à afficher
+    """
     t = ""
-    if text == "algébrique":
+    if text in ("algébrique", "algé"):
         a = round(cos(angle_rad), 2)
         b = round(sin(angle_rad), 2)
         if b == 0:
@@ -16,7 +26,7 @@ def get_text(text: str, n: int, k: int, angle_rad: float) -> str:
         else:
             t = f"{a}+{b}i"
         t = "  "+t
-    elif text in ("exponentielle", "polaire", "trigonométrique"):
+    elif text in ("exponentielle", "exp", "polaire", "pol", "trigonométrique", "trigo"):
         a = 2*k
         b = n
         pgcd = gcd(a, b)
@@ -33,9 +43,10 @@ def get_text(text: str, n: int, k: int, angle_rad: float) -> str:
             t = f"π/{b}"
         else:
             t = f"{a}π/{b}"
-        if text == "polaire":
+
+        if text in ("polaire", "pol"):
             t = f"  (1, {t})"
-        elif text == "exponentielle":
+        elif text in ("exponentielle", "exp"):
             if t == "0":
                 t = "  1"
             elif t == "π":
@@ -90,19 +101,28 @@ def poly_reg(pos: tuple, size: int, n: int, cercle: bool = True, text:str = None
 
 def aprox_circle(n, pos=(0, 0), radius=200):
     """
-    
+    Fonction donnant une approximation d'un cercle
+    entrées :
+        - n : le nombre de segments du cercle
+        - pos : la position du centre du cercle
+        - radius : le rayon du cercle
     """
     poly_reg(pos, radius, n, False, None, False)
 
 
 def display_racine_n_ieme():
-    n = int(input("équation de type z^n=1 n : "))
+    """
+    Fonction qui affiche les racines n-ième de l'unité
+    """
+    n = int(input("équation de type w^n=1 n : "))
     rayon = 200
-    poly_reg(pos = (0, 0), size = rayon, n = n, cercle = True, text = "trigonométrique", point = True)
+    poly_reg(pos = (-40, 30), size = rayon, n = n, cercle = True, text = "exponentielle", point = True)
 
 
 reset()
 setup(600, 500)
+
 #aprox_circle(100)
 display_racine_n_ieme()
+
 done()
